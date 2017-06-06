@@ -98,6 +98,6 @@ class VRUsersController extends Controller
      */
     public function getRoutesData()
     {
-        
+
     }
 }
