@@ -1,19 +1,18 @@
 <?php
 
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::group(['prefix' => '{lang?}'], function () {
     Route::get('/frontend', ['as' => 'app.frontEnd.index', 'uses' => 'FrontEndController@index']);
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin-permissions']], function () {
-
-    Route::get('/', function () {
-        return view('base');
-    });
 
     Route::group(['prefix' => 'menu'], function () {
 
@@ -83,7 +82,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin-permissions']
     });
 });
 
-Route::group(['prefix' => '{lang}', 'middleware' => ['language']], function (){
+Route::group(['prefix' => '{lang}'], function (){
 
     Route::get('/', ['as' => 'app.frontEnd.index', 'uses' => 'FrontEndController@index']);
 });
