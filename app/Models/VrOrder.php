@@ -6,7 +6,6 @@ namespace App\Models;
 
 class VrOrder extends CoreModel
 {
-    use UuidTrait;
 
     /**
      * Database table name

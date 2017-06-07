@@ -6,7 +6,6 @@ namespace App\Models;
 
 class VrPages extends CoreModel
 {
-    use UuidTrait;
 
     /**
      * Database table name

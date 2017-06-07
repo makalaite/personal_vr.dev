@@ -6,7 +6,6 @@ namespace App\Models;
 
 class VrCategories extends CoreModel
 {
-    use UuidTrait;
 
     /**
      * Database table name

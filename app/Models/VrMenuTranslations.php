@@ -6,8 +6,6 @@ namespace App\Models;
 
 class VrMenuTranslations extends CoreModel
 {
-    use UuidTrait;
-
     /**
      * Database table name
      * @var string

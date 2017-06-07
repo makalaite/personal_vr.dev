@@ -4,7 +4,6 @@ namespace App\Models;
 
 class VrRoles extends CoreModel
 {
-
     /**
      * $table name DataBases
      */
