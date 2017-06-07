@@ -3,17 +3,19 @@
 namespace App\Models;
 
 
-class VRResources extends CoreModel
+
+class VrResources extends CoreModel
 {
+    use UuidTrait;
+
     /**
-     * Table name
+     * Database table name
      * @var string
      */
     protected $table = 'vr_resources';
-
     /**
-     * Fields which will be manipulated
+     * Fillable column names
      * @var array
      */
-    protected $fillable = ['id', 'mime_type', 'path', 'size', 'width', 'height'];
+    protected $fillable = ['id', 'mime_type', 'path', 'width', 'size', 'height'];
 }

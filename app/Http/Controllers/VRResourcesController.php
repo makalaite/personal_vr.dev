@@ -1,81 +1,105 @@
-<?php
+<?php namespace App\Http\Controllers;
 
-namespace App\Http\Controllers;
-
-use App\Models\VRResources;
+use App\Models\VrResources;
 use Carbon\Carbon;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Controller;
 
+class VrResourcesController extends Controller {
 
-class VRResourcesController extends Controller {
-
-    use ValidatesRequests;
+    public function upload(UploadedFile $resource)
+    {
+        $data =
+            [
+                "size" => $resource->getsize(),
+                "mime_type" => $resource->getMimetype(),
+            ];
+        $path = 'upload/' . date("Y/m/d/");
+        $fileName = Carbon::now()->timestamp . '-' . $resource->getClientOriginalName();
+        $resource->move(public_path($path), $fileName);
+        $data["path"] = $path . $fileName;
+        $record = VrResources::create($data);
+        return $record->id;
+    }
 	/**
 	 * Display a listing of the resource.
-	 * GET /resources
+	 * GET /vrresources
 	 *
-	 * @return mixed
+	 * @return Response
 	 */
-	public function adminIndex()
+	public function index()
 	{
-
+		//
 	}
-    /**
-     * Show the form for creating a new resource.
-     * GET /resources/create
-     *
-     * @return Response
-     */
-    public function adminCreate()
-    {
 
-    }
+	/**
+	 * Show the form for creating a new resource.
+	 * GET /vrresources/create
+	 *
+	 * @return Response
+	 */
+	public function create()
+	{
+		//
+	}
 
-        /**
-         * Uploads file data
-         * Creates generates file path
-         *
-         * @param UploadedFile $file
-         * @return mixed
-         */
-        public function adminUpload(UploadedFile $file)
-    {
-
-    }
-    /**
-     * Store a newly created resource in storage.
-     * POST /resources
-     *
-     * @return mixed
-     */
-    protected function adminStore()
-    {
-
-   }
+	/**
+	 * Store a newly created resource in storage.
+	 * POST /vrresources
+	 *
+	 * @return Response
+	 */
+	public function store()
+	{
+		//
+	}
 
 	/**
 	 * Display the specified resource.
-	 * GET /resources/{id}
+	 * GET /vrresources/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function adminShow($id)
+	public function show($id)
+	{
+		//
+	}
+
+	/**
+	 * Show the form for editing the specified resource.
+	 * GET /vrresources/{id}/edit
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function edit($id)
+	{
+		//
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 * PUT /vrresources/{id}
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function update($id)
 	{
 		//
 	}
 
 	/**
 	 * Remove the specified resource from storage.
-	 * DELETE /resources/{id}
+	 * DELETE /vrresources/{id}
 	 *
 	 * @param  int  $id
-	 * @return mixed
+	 * @return Response
 	 */
-	public function adminDestroy($id)
+	public function destroy($id)
 	{
-
+		//
 	}
+
 }

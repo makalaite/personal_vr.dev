@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 
-class VRPermissions extends CoreModel
+class VrPermissions extends CoreModel
 {
+
     /**
-     * Table name
-     * @var string
+     * $table name DataBases
      */
     protected $table = 'vr_permissions';
 
     /**
-     * Fields which will be manipulated
-     * @var array
+     * $fillable is table 'vr_permissions' fields
      */
+
     protected $fillable = ['id', 'name'];
 }

@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
-class VRCategoriesTranslations extends CoreModel
+
+
+class VrCategoriesTranslations extends CoreModel
 {
+    use UuidTrait;
+
     /**
-     * Table name
+     * Database table name
      * @var string
      */
     protected $table = 'vr_categories_translations';
-
     /**
-     * Fields which will be manipulated
+     * Fillable column names
      * @var array
      */
-    protected $fillable = ['id', 'category_id', 'language_id', 'name', 'slug'];
+    protected $fillable = ['id', 'name', 'language_code', 'category_id'];
 }

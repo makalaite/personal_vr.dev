@@ -1,15 +1,12 @@
 <?php namespace App\Http\Controllers;
 
-
-use App\Models\VRUsers;
-use App\Models\VRUsersRolesConnections;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+use App\Models\VrOrder;
+use App\Models\VrUsers;
 use Illuminate\Routing\Controller;
+use Ramsey\Uuid\Uuid;
 
-class VRUsersController extends Controller
+class VrUsersController extends Controller
 {
-
-    use ValidatesRequests;
 
     /**
      * Display a listing of the resource.
@@ -17,7 +14,12 @@ class VRUsersController extends Controller
      *
      * @return Response
      */
-    public function adminIndex()
+    public function index()
+    {
+
+    }
+
+    public function orderIndex (string $id)
     {
 
     }
@@ -28,9 +30,9 @@ class VRUsersController extends Controller
      *
      * @return Response
      */
-    public function adminCreate()
+    public function create()
     {
-        //
+
     }
 
     /**
@@ -39,9 +41,9 @@ class VRUsersController extends Controller
      *
      * @return Response
      */
-    public function adminStore()
+    public function store()
     {
-        //
+
     }
 
     /**
@@ -51,7 +53,7 @@ class VRUsersController extends Controller
      * @param  int $id
      * @return Response
      */
-    public function adminShow($id)
+    public function show($id)
     {
 
     }
@@ -63,7 +65,7 @@ class VRUsersController extends Controller
      * @param  int $id
      * @return Response
      */
-    public function adminEdit($id)
+    public function edit($id)
     {
 
     }
@@ -73,9 +75,9 @@ class VRUsersController extends Controller
      * PUT /vrusers/{id}
      *
      * @param  int $id
-     * @return mixed
+     * @return Response
      */
-    public function adminUpdate($id)
+    public function update($id)
     {
 
     }
@@ -87,17 +89,14 @@ class VRUsersController extends Controller
      * @param  int $id
      * @return Response
      */
-    public function adminDestroy($id)
+    public function destroy($id)
+    {
+        //
+    }
+
+    private function listBladeData()
     {
 
     }
 
-    /**
-     * Get routes data
-     * @return array
-     */
-    public function getRoutesData()
-    {
-
-    }
 }

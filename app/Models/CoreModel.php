@@ -1,24 +1,40 @@
 <?php
-
-namespace App\Models;
-
-
-
-use App\UuidTrait;
+namespace App\Models;  
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Ramsey\Uuid\Uuid;
 
 class CoreModel extends Model
 {
     use SoftDeletes;
 
-    use UuidTrait;
     /**
-     * Identifies that id will not be auto incrementing
+     * Disables auto-increment
      *
      * @var bool
      */
     public $incrementing = false;
 
+    /**
+     * Generates UUID if doesn't exist in entry
+     *
+     * returns @string
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model)
+        {
+            if (!isset($model->attributes['id'])) {
+                $model->attributes['id'] = Uuid::uuid4();
+            } else {
+                $model->{$model->getKeyName()} = $model->attributes['id'];
+            }
+        });
+    }
+    public function getTableName()
+    {
+        $tableName = substr($this->table,3);
+        return $tableName;
+    }
 }

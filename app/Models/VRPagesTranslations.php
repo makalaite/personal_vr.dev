@@ -2,18 +2,22 @@
 
 namespace App\Models;
 
-class VRPagesTranslations extends CoreModel
+
+
+class VrPagesTranslations extends CoreModel
 {
+    use UuidTrait;
+
+
+
     /**
-     * Table name
+     * Database table name
      * @var string
      */
     protected $table = 'vr_pages_translations';
-
     /**
-     * Fields which will be manipulated
+     * Fillable column names
      * @var array
      */
-    protected $fillable = ['id', 'page_id', 'language_id', 'title', 'description_short', 'description_long', 'slug'];
-
+    protected $fillable = ['id', 'page_id', 'language_code', 'slug', 'title', 'description_short', 'description_long'];
 }
