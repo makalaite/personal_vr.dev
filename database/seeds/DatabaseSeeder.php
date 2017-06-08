@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\VrLanguageCodes;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,5 +13,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(VrRolesSeeder::class);
+        $this->call(VrLanguageCodesSeeder::class);
     }
 }
