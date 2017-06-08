@@ -12,5 +12,7 @@
 @include('admin.menu')
  @yield('content')
 
+
 </body>
+@yield('scripts')
 </html>
