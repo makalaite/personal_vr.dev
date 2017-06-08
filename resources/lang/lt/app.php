@@ -6,5 +6,8 @@ return [
     'pages' => 'Puslapiai',
     'categories' => 'Kategorijos',
     'users' => 'Vartotojai',
-    'admin_menu' => 'Administratoriaus menu'
+    'admin_menu' => 'Administratoriaus menu',
+    'no_data' => "Nėra duomenų",
+    'activation' => 'Aktyvuoti',
+    'disable' => 'Išjungti'
 ];
