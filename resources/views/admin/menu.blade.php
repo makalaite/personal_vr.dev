@@ -1,5 +1,5 @@
 <div id="menu">
-    <h2><a href="{{ route('app.menu.index')  }}"> {{ trans('app.admin_menu') }} </a></h2>
+    <h3><a href="{{ route('app.menu.index')  }}"> {{ trans('app.admin_menu') }} </a></h3>
     <ul>
         <li> <a href="{{ route('app.language.index')  }}"> {{ trans('app.languages') }} </a></li>
         <li> <a href="{{ route('app.orders.index')  }}"> {{ trans('app.orders') }} </a></li></li>
