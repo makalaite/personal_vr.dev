@@ -22,4 +22,11 @@ html, body
     height: 100%;
     /*margin-left:230px;*!*/
     padding-left: 230px;
+    color: white;
+}
+
+th, td
+{
+    border: solid 1px;
+    padding: 5px;
 }
