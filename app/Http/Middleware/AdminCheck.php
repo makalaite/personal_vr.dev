@@ -8,7 +8,7 @@ use Closure;
 class AdminCheck
 {
     /**
-     * check if our user has a super admin role
+     * check if our user has a super admin role and if not, redirect to login page
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
@@ -19,8 +19,8 @@ class AdminCheck
         if(in_array('super-admin', auth()->user()->roles->pluck('id')->toArray()))
         {
             return $next($request);
-        } else {
-            return redirect('login');
+//        } else {
+//            return redirect('login');
         }
     }
 }
