@@ -41,7 +41,7 @@
 @section('scripts')
     <script>
         function enableDisableLanguage(URL, value) {
-            
+
         }
     </script>
     @endsection
