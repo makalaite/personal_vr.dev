@@ -68,12 +68,29 @@
 
 //                  console.log($('#' + response.id))
 //                    console.log($('#' + response.id).hide());
+//                    $('#' + response.id).css({
+//                        opacity:0.5,
+//                        backgroundColor: 'grey'
+//                    });
+                    var $danger = ($('#' + response.id).find('.btn-danger'));
+                    var $success = ($('#' + response.id).find('.btn-success'));
 
-                    if (response.is_active) {
-                        
+//                  console.log($danger, $success);
+
+//                    if(response.is_active == 1)
+//                    {
+//                        alert('response is active ' + response.is_active)
+//                    }
+
+                    if (response.is_active === '1') {
+                        $success.hide();
+                        $danger.show()
+                    } else {
+                            $success.show();
+                            $danger.hide()
+                        }
                     }
-                }
-            })
+            });
         }
     </script>
 @endsection
