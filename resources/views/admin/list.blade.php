@@ -14,11 +14,11 @@
                         @foreach($record as $key => $one)
                         @if($key == 'is_active')
                                 <td>@if($one == 1)
-                                        <button onclick="enableDisableLanguage( {{ route($callAction, $record['id'] ),0 }} )" type="button"  class="btn btn-danger">Disable</button>
-                                        <button onclick="enableDisableLanguage({{ route($callAction, $record['id'] ),1 }})" type="button" style="display:none" class="btn btn-success">{{ trans('app.activation') }}</button>
+                                        <button onclick="toggleActive( {{ route($callAction, $record['id'] ),0 }} )" type="button"  class="btn btn-danger">Disable</button>
+                                        <button onclick="toggleActive({{ route($callAction, $record['id'] ),1 }})" type="button" style="display:none" class="btn btn-success">{{ trans('app.activation') }}</button>
                                     @else
-                                        <button onclick="enableDisableLanguage({{ route($callAction, $record['id'] ),1 }})" type="button" style="display:none" class="btn btn-danger">{{ trans('app.disable') }}</button>
-                                        <button onclick="enableDisableLanguage({{ route($callAction, $record['id'] ),0 }})" type="button" class="btn btn-success">Activation</button>
+                                        <button onclick="toggleActive({{ route($callAction, $record['id'] ),1 }})" type="button" style="display:none" class="btn btn-danger">{{ trans('app.disable') }}</button>
+                                        <button onclick="toggleActive({{ route($callAction, $record['id'] ),0 }})" type="button" class="btn btn-success">Activation</button>
                                     @endif
                                 </td>
 
@@ -40,7 +40,7 @@
 
 @section('scripts')
     <script>
-        function enableDisableLanguage(URL, value) {
+        function toggleActive(URL, value) {
 
         }
     </script>
