@@ -13,8 +13,8 @@ class VrLanguageCodesController extends Controller {
 	 */
 	public function index()
 	{
-        $config['callAction'] = 'app.language.edit';
         $config['list'] = VrLanguageCodes::get()->toArray();
+        $config['callAction'] = 'app.language.edit';
         return view('admin.list', $config);
 	}
 

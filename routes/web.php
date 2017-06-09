@@ -16,7 +16,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin-permissions']], function () {
 
     Route::get('/', function () {
-        return view('admin.list');
+        return view('admin.core');
     });
     
     Route::group(['prefix' => 'menu'], function () {
