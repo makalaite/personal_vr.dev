@@ -9,5 +9,6 @@ return [
     'admin_menu' => 'Administratoriaus menu',
     'no_data' => "Nėra duomenų",
     'activation' => 'Aktyvuoti',
-    'disable' => 'Išjungti'
+    'disable' => 'Išjungti',
+    'language_codes_list' => 'Kalbų sąrašas'
 ];
