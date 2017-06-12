@@ -16,9 +16,13 @@ class VrCategoriesController extends Controller {
 	 * @return Response
      *
 	 */
-	public function index()
+	public function adminIndex()
 	{
-
+        $config['list'] = VrCategories::get()->toArray();
+        $config['create'] = 'app.categories.create';
+        $config['title'] = trans('app.category_list');
+        $config['new'] = '';
+        return view('admin.list', $config);
 	}
 
 	/**
@@ -91,7 +95,7 @@ class VrCategoriesController extends Controller {
 
 	}
 
-    private function listBladeData()
+    private function getFormData()
     {
 
     }
