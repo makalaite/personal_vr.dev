@@ -16,7 +16,7 @@ class VrUsersController extends Controller
      */
     public function index()
     {
-
+        $config['title'] = trans('app.users_list');
     }
 
     public function orderIndex (string $id)
