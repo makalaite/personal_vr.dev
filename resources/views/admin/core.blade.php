@@ -10,7 +10,10 @@
 <body>
 
 @include('admin.menu')
-@yield('content')
+<div id="list">
+    @yield('content')
+</div>
+
 
 
 </body>

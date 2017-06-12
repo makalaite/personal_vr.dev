@@ -15,4 +15,7 @@ return [
     'orders_list' => 'Užsakymų sąrašas',
     'pages_list' => 'Puslapių sąrašas',
     'users_list' => 'Vartotojų sąrašas',
+    'language_code' => 'kalba',
+    'name' => 'pavadinimas',
+
 ];

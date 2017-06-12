@@ -2,9 +2,7 @@
 
 @section('content')
 
-
-    <div id="list">
-        <div><h3>{{ $title }} </h3></div>
+        <div><h3> {{ $title }}</h3></div>
         <div> @if(isset($create))
                 <a class="btn btn-success" href="{{route($create)}}"> New one </a>
             @endif
@@ -53,7 +51,6 @@
 
         @else <h1> {{ trans('app.no_data') }} </h1>
         @endif
-    </div>
 @endsection
 
 @section('scripts')
