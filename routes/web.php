@@ -72,7 +72,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin-permissions']
     });
 
     Route::group(['prefix' => 'categories'], function () {
-        Route::get('/', ['as' => 'app.categories.index', 'uses' => 'VrCategoriesController@index']);
+        Route::get('/', ['as' => 'app.categories.index', 'uses' => 'VrCategoriesController@adminIndex']);
         Route::get('/create', ['as' => 'app.categories.create', 'uses' => 'VrCategoriesController@create']);
         Route::post('/create', ['uses' => 'VrCategoriesController@store']);
         Route::group(['prefix' => '{id}'], function () {
