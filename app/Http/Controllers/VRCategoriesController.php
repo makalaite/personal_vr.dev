@@ -37,7 +37,7 @@ class VrCategoriesController extends Controller
     {
         $config = $this->getFormData();
         $config['title'] = trans('app.category_list');
-        $config['create'] = 'app.categories.create';
+        $config['route'] = route('app.categories.create');
 
         return view('admin.form', $config);
     }
@@ -83,7 +83,14 @@ class VrCategoriesController extends Controller
      */
     public function edit($id)
     {
+        $config = $this->getFormData();
+        $config['title'] = $id;
+        $config['route'] = route('app.categories.edit', $id);
+        $record = VrCategories::find($id)->toArray();
 
+        dd($record);
+
+        return view('admin.form', $config);
     }
 
     /**
