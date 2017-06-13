@@ -9,7 +9,7 @@
         </div>
         @if(sizeof($list) > 0)
             <table class="table table-hover">
-                <h3>{{ trans('app.language_codes_list') }}</h3>
+                <h3>{{ $tableName }}</h3>
                 <tr>
                     @foreach($list[0] as $key => $value)
                         <th>{{$key}}</th>
