@@ -13,7 +13,8 @@ class VrCategoriesTranslationsController extends Controller {
 	 */
 	public function index()
 	{
-		//
+        $config['edit'] = 'app.categories.edit';
+        $config['delete'] = 'app.categories.destroy';
 	}
 
 	/**
