@@ -61,7 +61,7 @@
                             </a>
                         </td>
                     @endif
-                        
+
                     @if(isset($delete))
                         <td>
                             <button onclick="deleteItem( '{{ route($delete, $record['id']) }}' )"

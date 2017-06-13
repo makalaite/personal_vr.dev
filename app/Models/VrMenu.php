@@ -17,4 +17,6 @@ class VrMenu extends CoreModel
      * @var array
      */
     protected $fillable = ['id', 'new_window', 'sequence', 'vr_parent_id'];
+
+
 }

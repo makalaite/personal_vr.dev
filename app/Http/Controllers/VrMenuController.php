@@ -38,7 +38,11 @@ class VrMenuController extends Controller
      */
     public function create()
     {
+        $config = $this->getFormData();
+        $config['title'] = trans('app.menu_list');
+        $config['route'] = route('app.categories.create');
 
+        return view('admin.menu', $config);
     }
 
     /**
@@ -102,8 +106,27 @@ class VrMenuController extends Controller
 
     }
 
-    private function listBladeData()
+    private function getFormData()
     {
-
+        $config['fields'][] = [
+            'type' => 'drop_down',
+            'key' => 'language_code',
+            'options' => getActiveLanguages()
+        ];
+        $config['fields'][] = [
+            'type' => 'single_line',
+            'key' => 'name',
+        ];
+        $config['fields'][] = [
+            'type' => 'single_line',
+            'key' => 'url',
+        ];
+        $config['fields'][] = [
+            'type' => 'check_box',
+            'key' => 'new_window',
+            'options' => [
+                'key' => 'value',
+            ]
+        ];
     }
 }
