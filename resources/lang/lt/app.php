@@ -17,5 +17,6 @@ return [
     'users_list' => 'Vartotojų sąrašas',
     'language_code' => 'kalba',
     'name' => 'pavadinimas',
+    'menu_list' => 'Menu'
 
 ];

@@ -6,6 +6,7 @@
 
     @foreach($fields as $field)
         <br/>
+        @if(isset($field['type'] == ))
         {{ Form::label($field['key'], trans('app.' . $field['key'])) }}
 
         @if($field['type'] == 'single_line')
