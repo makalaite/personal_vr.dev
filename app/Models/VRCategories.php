@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class VrCategories extends CoreModel
 {
@@ -17,5 +17,12 @@ class VrCategories extends CoreModel
      * @var array
      */
     protected $fillable = ['id', 'comment'];
+
+    protected $with = ['translation'];
+
+    public function translation(){
+        return $this->hasOne(VrCategoriesTranslations::class, 'record_id', 'id')->where('language_code', app()->getLocale());
+    }
+
 
 }
