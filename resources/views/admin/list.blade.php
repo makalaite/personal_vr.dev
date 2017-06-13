@@ -14,6 +14,13 @@
                 @foreach($list[0] as $key => $value)
                     <th>{{$key}}</th>
                 @endforeach
+
+                @if(isset($edit))
+                    <th> Redaguoti</th>
+                @endif
+                @if(isset($delete))
+                    <th> Ištrinti</th>
+                @endif
             </tr>
 
 
@@ -36,6 +43,8 @@
                                             class="btn btn-success">{{ trans('app.activation') }}</button>
                                 @endif
                             </td>
+
+
                         @elseif($key == 'translation')
                             <td>{{$one['name'] . ' ' . $one['language_code']}}</td>
 
@@ -44,14 +53,54 @@
 
                         @endif
                     @endforeach
-                </tr>
-            @endforeach
 
+                    @if(isset($edit))
+
+                        <td><a href="{{ route($edit, $record['id']) }}">
+                                <button type="button" class="btn btn-primary">Edit</button>
+                            </a>
+                        </td>
+                    @endif
+                        
+                    @if(isset($delete))
+                        <td>
+                            <button onclick="deleteItem( '{{ route($delete, $record['id']) }}' )"
+                                    class="btn btn-danger">Delete
+                            </button>
+                        </td>
+                    @endif
+                </tr>
+
+            @endforeach
 
         </table>
 
     @else <h1> {{ trans('app.no_data') }} </h1>
     @endif
+@endsection
+
+
+@section('scripts')
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        function deleteItem(route) {
+            $.ajax({
+                url: route,
+                type: 'DELETE',
+                dataType: 'json',
+                success: function (response) {
+                    $('#' + response.id).remove();
+                },
+                error: function () {
+                    alert('ERROR')
+                }
+            });
+        }
+    </script>
 @endsection
 
 @section('scripts')
