@@ -2,7 +2,7 @@
 
 @section('content')
 <h3>{{  $title  }} </h3>
-    {!! Form::open(['url' => route($create)]) !!}
+    {!! Form::open(['url' => $route]) !!}
 
     @foreach($fields as $field)
         <br/>
