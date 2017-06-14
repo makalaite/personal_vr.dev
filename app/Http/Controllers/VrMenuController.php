@@ -27,7 +27,14 @@ class VrMenuController extends Controller
      */
     public function index()
     {
+        $config['list'] = VrMenu::get()->toArray();
+        $config['title'] = trans('app.menu_list');
+        $config['tableName'] = trans('app.menu_list');
+        $config['create'] = 'app.menu.create';
+        $config['edit'] = 'app.menu.edit';
+        $config['delete'] = 'app.menu.destroy';
 
+        return view('admin.list', $config);
     }
 
     /**
@@ -39,10 +46,11 @@ class VrMenuController extends Controller
     public function create()
     {
         $config = $this->getFormData();
-        $config['title'] = trans('app.menu_list');
-        $config['route'] = route('app.categories.create');
 
-        return view('admin.menu', $config);
+        $config['title'] = trans('app.menu_list');
+        $config['route'] = route('app.menu.create');
+
+        return view('admin.form', $config);
     }
 
     /**
@@ -53,9 +61,17 @@ class VrMenuController extends Controller
      */
 
 
-    public function store(Request $request)
+    public function store()
     {
+        dd($_POST);
+        $data = request()->all();
 
+        $record = VrMenu::create($data);
+
+        $data['record_id'] = $record->id;
+        VrMenuTranslations::create($data);
+
+        return redirect()->route('app.menu.edit', $record->id);
     }
 
     /**
@@ -103,7 +119,10 @@ class VrMenuController extends Controller
      */
     public function destroy($id)
     {
+        VrMenuTranslations::destroy(VrMenuTranslations::where('record_id', $id)->pluck('id')->toArray());
+        VrMenu::destroy($id);
 
+        return ["success" => true, "id" => $id];
     }
 
     private function getFormData()
@@ -122,11 +141,29 @@ class VrMenuController extends Controller
             'key' => 'url',
         ];
         $config['fields'][] = [
+            'type' => 'single_line',
+            'key' => 'sequence',
+        ];
+        $config['fields'][] = [
+            'type' => 'drop_down',
+            'key' => 'vr_parent_id',
+            'options' => VrMenuTranslations::get()->pluck('name','record_id'),
+        ];
+        $config['fields'][] = [
             'type' => 'check_box',
             'key' => 'new_window',
             'options' => [
-                'key' => 'value',
+                ['label' => trans('app.yes'),
+                'name' => 'new_window',
+                'value' => 1], ['label' => trans('app.yes'),
+                'name' => 'new_window',
+                'value' => 1], ['label' => trans('app.yes'),
+                'name' => 'new_window',
+                'value' => 1],
+
             ]
         ];
+
+        return $config;
     }
 }
