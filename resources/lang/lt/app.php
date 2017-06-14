@@ -11,12 +11,15 @@ return [
     'activation' => 'Aktyvuoti',
     'disable' => 'Išjungti',
     'language_codes_list' => 'Kalbų sąrašas',
+    'language_code' => 'Kalba',
     'category_list' => 'Kategorijų sąrašas',
     'orders_list' => 'Užsakymų sąrašas',
     'pages_list' => 'Puslapių sąrašas',
     'users_list' => 'Vartotojų sąrašas',
-    'language_code' => 'kalba',
-    'name' => 'pavadinimas',
-    'menu_list' => 'Menu'
+    'name' => 'Pavadinimas',
+    'menu_list' => 'Menu sąrašas',
+    'new_window' => 'Naujame lange',
+    'url' => 'Nuoroda',
+    'sequence' => 'Eiliškumas',
 
 ];
