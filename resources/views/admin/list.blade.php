@@ -100,16 +100,7 @@
                 }
             });
         }
-    </script>
-@endsection
 
-@section('scripts')
-    <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
         function toggleActive(URL, value) {
             console.log(URL, value);
             $.ajax({
