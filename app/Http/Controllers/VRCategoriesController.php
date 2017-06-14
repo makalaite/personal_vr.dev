@@ -52,12 +52,10 @@ class VrCategoriesController extends Controller
     public function store()
     {
 
+        $data = request()->all();
         $record = VrCategories::create();
 
-        $data = request()->all();
-
         $data['record_id'] = $record->id;
-
         VrCategoriesTranslations::create($data);
 
         return redirect()->route('app.categories.edit', $record->id);
