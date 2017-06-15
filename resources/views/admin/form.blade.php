@@ -4,35 +4,46 @@
     <h3>{{  $title  }} </h3>
     {!! Form::open(['url' => $route]) !!}
 
-    @foreach($fields as $field)
-        <br/>
-        {{ Form::label($field['key'], trans('app.' . $field['key'])) }} <br/>
+    @foreach($fields as $field) <br/>
 
-        @if($field['type'] == 'single_line')
+    {{ Form::label($field['key'], trans('app.' . $field['key'])) }} <br/>
 
-            {{ Form::text($field['key']) }}
+    @if($field['type'] == 'single_line')
+
+        @if(isset($record[$field['key']] ) )
+            {{ Form::text($field['key'], $record[$field['key']] ) }}
+
             <br/>
-        @elseif ($field['type'] == 'drop_down')
+        @else
+            {{ Form::text($field['key']) }}
+        @endif
 
 
-            @if($field['key'] == 'language_code')
+    @elseif ($field['type'] == 'drop_down')
 
-                {!! Form::select($field['key'], $field['options'] ) !!}
-                <br/>
-            @else
-                {!! Form::select($field['key'], $field['options'], null, array('placeholder'=> '') ) !!}
-            @endif
-<br/>
-        @elseif( ($field['type'] == 'check_box') )
+        @if($field['key'] == 'language_code')
 
-            @foreach($field['options'] as $option)
+            {!! Form::select($field['key'], $field['options'] ) !!}
+            <br/>
+        @else
+            {!! Form::select($field['key'], $field['options'], null, array('placeholder'=> '') ) !!}
+        @endif
+        <br/>
+    @elseif( ($field['type'] == 'check_box') )
 
-                {{ Form::checkbox($option['name'], $option['value'])  }}
+
+        @foreach($field['options'] as $option)
+            @if(isset($record[$field['name']] ) )
+                {{ Form::checkbox($option['name'], $option['value'], $record['name'], $record['value'] ) }}
                 {{ Form::label($option['label'] ) }} <br/>
 
-            @endforeach
+            @else
+                {{ Form::checkbox($option['name'], $option['value'] ) }}
+                {{ Form::label($option['label'] ) }} <br/>
+            @endif
             <br/>
-        @endif
+        @endforeach
+    @endif
     @endforeach
     <br/>
     {{ Form::submit('Patvirtinti'), array('class'=>'btn btn-success') }}
