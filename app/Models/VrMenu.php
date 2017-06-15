@@ -21,6 +21,10 @@ class VrMenu extends CoreModel
     protected $with = ['translation'];
 
     public function translation(){
-        return $this->hasOne(VrMenuTranslations::class, 'record_id', 'id')->where('language_code', app()->getLocale());
+        return $this->hasOne(VrMenuTranslations::class, 'record_id', 'id')->
+        where('language_code', app()->getLocale());
     }
+
+
+
 }
