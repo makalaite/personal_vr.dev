@@ -63,7 +63,7 @@ class VrMenuController extends Controller
 
     public function store()
     {
-        dd($_POST);
+        // dd($_POST);
         $data = request()->all();
 
         $record = VrMenu::create($data);
@@ -127,6 +127,10 @@ class VrMenuController extends Controller
 
     private function getFormData()
     {
+        $lang = request('language_code');
+        if ($lang == null)
+            $lang = app()->getLocale();
+
         $config['fields'][] = [
             'type' => 'drop_down',
             'key' => 'language_code',
@@ -147,19 +151,21 @@ class VrMenuController extends Controller
         $config['fields'][] = [
             'type' => 'drop_down',
             'key' => 'vr_parent_id',
-            'options' => VrMenuTranslations::get()->pluck('name','record_id'),
+            'options' => VrMenuTranslations::get()
+                ->where('language_code', $lang)
+                ->pluck('name', 'record_id'),
         ];
         $config['fields'][] = [
             'type' => 'check_box',
             'key' => 'new_window',
             'options' => [
                 ['label' => trans('app.yes'),
-                'name' => 'new_window',
-                'value' => 1], ['label' => trans('app.yes'),
-                'name' => 'new_window',
-                'value' => 1], ['label' => trans('app.yes'),
-                'name' => 'new_window',
-                'value' => 1],
+                    'name' => 'new_window',
+                    'value' => 1], ['label' => trans('app.yes'),
+                    'name' => 'new_window',
+                    'value' => 1], ['label' => trans('app.yes'),
+                    'name' => 'new_window',
+                    'value' => 1],
 
             ]
         ];
