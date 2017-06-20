@@ -28,8 +28,10 @@ class VrMenuController extends Controller
     public function index()
     {
         $config['list'] = VrMenu::get()->toArray();
-        $config['title'] = trans('app.menu_list');
+        $config['route'] = route('app.menu.create');
+        $config['serviceTitle'] = trans('app.menu');
         $config['tableName'] = trans('app.menu_list');
+
         $config['create'] = 'app.menu.create';
         $config['edit'] = 'app.menu.edit';
         $config['delete'] = 'app.menu.destroy';
@@ -47,7 +49,7 @@ class VrMenuController extends Controller
     {
         $config = $this->getFormData();
 
-        $config['title'] = trans('app.menu_list');
+        $config['serviceTitle'] = trans('app.menu_list');
         $config['route'] = route('app.menu.create');
 
         return view('admin.form', $config);
@@ -104,7 +106,7 @@ class VrMenuController extends Controller
 
         $config['record'] = $record;
 
-        $config['title'] = trans('app.menu_list');
+        $config['serviceTitle'] = trans('app.menu_list');
         $config['route'] = route('app.menu.create', $id);
 
         return view('admin.form', $config);
@@ -117,8 +119,21 @@ class VrMenuController extends Controller
      * @param  int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
+        $data = request()->all();
+
+        $record = VrMenu::find($id);
+        $record->update($data);
+
+        $data['record_id'] = $id;
+
+        VrMenuTranslations::updateOrCreate([
+            'record_id' => $id,
+            'language_code' => $data['language_code']
+        ], $data);
+
+        return redirect(route('app.menu.edit', $record->id));
 
     }
 
@@ -165,20 +180,19 @@ class VrMenuController extends Controller
             'key' => 'vr_parent_id',
             'options' => VrMenuTranslations::get()
                 ->where('language_code', $lang)
-                ->pluck('name', 'record_id'),
+                ->pluck('name', 'record_id')
+                ->toArray()
         ];
+
         $config['fields'][] = [
             'type' => 'check_box',
             'key' => 'new_window',
             'options' => [
-                ['label' => trans('app.yes'),
+                [
+                    'title' => trans('app.yes'),
                     'name' => 'new_window',
-                    'value' => 1], ['label' => trans('app.yes'),
-                    'name' => 'new_window',
-                    'value' => 1], ['label' => trans('app.yes'),
-                    'name' => 'new_window',
-                    'value' => 1],
-
+                    'value' => 1
+                ]
             ]
         ];
 
