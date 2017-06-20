@@ -7,8 +7,6 @@ use Ramsey\Uuid\Uuid;
 
 class VrCategoriesController extends Controller
 {
-
-
     /**
      * Display a listing of the resource.
      * GET /vrcategories
@@ -19,8 +17,9 @@ class VrCategoriesController extends Controller
     public function adminIndex()
     {
         $config['list'] = VrCategories::get()->toArray();
-        $config['title'] = trans('app.category_list');
+        $config['serviceTitle'] = trans('app.categories');
         $config['tableName'] = trans('app.category_list');
+
         $config['create'] = 'app.categories.create';
         $config['edit'] = 'app.categories.edit';
         $config['delete'] = 'app.categories.destroy';
@@ -37,7 +36,7 @@ class VrCategoriesController extends Controller
     public function create()
     {
         $config = $this->getFormData();
-        $config['title'] = trans('app.category_list');
+        $config['serviceTitle'] = trans('app.category_list');
         $config['route'] = route('app.categories.create');
 
         return view('admin.form', $config);
@@ -82,10 +81,15 @@ class VrCategoriesController extends Controller
      */
     public function edit($id)
     {
-        $config = $this->getFormData();
-        $config['title'] = $id;
-        $config['route'] = route('app.categories.edit', $id);
         $record = VrCategories::find($id)->toArray();
+        $record['name'] = $record['translation']['name'];
+        $record['language_code'] = $record['translation']['language_code'];
+
+        $config = $this->getFormData();
+        $config['record'] = $record;
+
+        $config['serviceTitle'] = 'Editing: ' . $id;
+        $config['route'] = route('app.categories.edit', $id);
 
         return view('admin.form', $config);
     }
@@ -99,7 +103,19 @@ class VrCategoriesController extends Controller
      */
     public function update($id)
     {
+        $data = request()->all();
 
+        $record = VrCategories::find($id);
+        $record->update($data);
+
+        $data['record_id'] = $id;
+
+        VrCategoriesTranslations::updateOrCreate([
+            'record_id' => $id,
+            'language_code' => $data['language_code']
+        ],$data);
+
+        return redirect(route('app.categories.edit', $record->id));
     }
 
     /**
