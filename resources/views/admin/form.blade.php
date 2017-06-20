@@ -1,48 +1,79 @@
 @extends('admin.core')
 
 @section('content')
-    <h3>{{  $title  }} </h3>
-    {!! Form::open(['url' => $route]) !!}
+    <h3>{{ $serviceTitle }} </h3>
+    {!! Form::open(['url' => $route, 'files' => true]) !!}
 
     @foreach($fields as $field) <br/>
 
-    {{ Form::label($field['key'], trans('app.' . $field['key'])) }} <br/>
+            {{ Form::label($field['key'], trans('app.' . $field['key'])) }} <br/>
+
 
     @if($field['type'] == 'single_line')
 
         @if(isset($record[$field['key']] ) )
-            {{ Form::text($field['key'], $record[$field['key']] ) }}
-
-            <br/>
+            {{ Form::text($field['key'], $record[$field['key']] ) }} <br/>
         @else
             {{ Form::text($field['key']) }}
         @endif
 
 
+    @elseif($field['type'] == 'textarea')
+
+        @if(isset ($record[$field['key']]))
+            {{ Form::textarea($field['key'],$record[$field['key']],['rows' => $field['rows'], 'columns' => $field['columns'], ])}}
+        @else
+            {{ Form::textarea($field['key'],null,['rows' => $field['rows'], 'columns' => $field['columns'] , 'class' => 'form_textarea'])}}
+        @endif
+
+
     @elseif ($field['type'] == 'drop_down')
 
-        @if($field['key'] == 'language_code')
+        @if(isset($record[$field['key']]))
 
-            {!! Form::select($field['key'], $field['options'] ) !!}
-            <br/>
-        @else
-            {!! Form::select($field['key'], $field['options'], null, array('placeholder'=> '') ) !!}
-        @endif
-        <br/>
-    @elseif( ($field['type'] == 'check_box') )
-
-
-        @foreach($field['options'] as $option)
-            @if(isset($record[$field['name']] ) )
-                {{ Form::checkbox($option['name'], $option['value'], $record['name'], $record['value'] ) }}
-                {{ Form::label($option['label'] ) }} <br/>
-
+            @if($field['key'] == 'language_code' || $field['key'] == 'category_id' )
+                {{Form::select($field['key'],$field['options'], $record[$field['key']])}}
             @else
-                {{ Form::checkbox($option['name'], $option['value'] ) }}
-                {{ Form::label($option['label'] ) }} <br/>
+                {{Form::select($field['key'],$field['options'], $record[$field['key']], ['placeholder' => '']) }}
             @endif
-            <br/>
-        @endforeach
+
+
+        @else
+            @if($field['key'] == 'language_code' || $field['key'] == 'category_id')
+                {{Form::select($field['key'],$field['options'])}}
+            @else
+                {{Form::select($field['key'],$field['options'], null, ['placeholder' => ''] ) }}
+
+            @endif
+        @endif <br/>
+
+
+    @elseif( $field['type'] == 'check_box' )
+
+        @if(isset($record[$field['key']]))
+            @foreach($field['options'] as $option)
+
+                {{Form::label($option['title'])}}
+                {{Form::checkbox($option['name'],$option['value'], $record[$field['key']])}}
+
+            @endforeach
+        @else
+            @foreach($field['options'] as $option)
+
+                {{Form::label($option['title'])}}
+                {{Form::checkbox($option['name'],$option['value'])}}
+
+            @endforeach
+        @endif
+
+    @elseif($field['type'] == 'file')
+        @if(isset($record[$field['key']]))
+
+            {{Form::file('file'),$record[$field['key']]}}
+        @else
+            {{Form::file('file')}}
+        @endif
+
     @endif
     @endforeach
     <br/>

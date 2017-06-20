@@ -2,11 +2,13 @@
 
 @section('content')
 
-    <div><h3> {{ $title }}</h3></div>
-    <div> @if(isset($create))
+    <div><h3> {{ $serviceTitle }}</h3></div>
+    <div>
+        @if(isset($create))
             <a class="btn btn-success" href="{{route($create)}}"> New one </a>
         @endif
     </div>
+
     @if(sizeof($list) > 0)
         <table class="table table-hover">
             <h3>{{ $tableName }}</h3>
@@ -18,6 +20,7 @@
                 @if(isset($edit))
                     <th> Redaguoti</th>
                 @endif
+
                 @if(isset($delete))
                     <th> Ištrinti</th>
                 @endif
@@ -26,9 +29,9 @@
 
             @foreach($list as $record)
                 <tr id="{{ $record['id'] }}">
-                    @foreach($record as $key => $one)
+                    @foreach($record as $key => $value)
                         @if($key == 'is_active')
-                            <td>@if($one == 1)
+                            <td>@if($value == 1)
                                     <button onclick="toggleActive( '{{ route($callAction, $record['id']) }}',0 )"
                                             type="button" class="btn btn-danger">{{ trans('app.disable') }}</button>
                                     <button onclick="toggleActive( '{{ route($callAction, $record['id']) }}',1 )"
@@ -46,13 +49,23 @@
 
 
                         @elseif($key == 'translation')
-                            <td>{{$one['name'] . ' ' . $one['language_code']}}</td>
 
+                            @if(isset($value['title']))
+                                <td>{{$value['title'] . ' ' . $value['language_code']}}</td>
+
+                            @else
+                                <td>{{$value['name'] . ' ' . $value['language_code']}}</td>
+                            @endif
+
+
+                        @elseif($key == 'rol')
+                            <td>{{ $value['role_id'] }}</td>
                         @else
-                            <td>{{$one}}</td>
-
+                            <td>{{$value}}</td>
                         @endif
+
                     @endforeach
+
 
                     @if(isset($edit))
 
