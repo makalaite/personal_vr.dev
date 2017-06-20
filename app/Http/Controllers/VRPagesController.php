@@ -17,32 +17,18 @@ class VrPagesController extends Controller {
 	 */
 
 	public function index()
-	{
-        $dataFromModel = new VrPages;
-        $config = $this->listBladeData();
-        $config['tableName'] = $dataFromModel->getTableName();
-        $config['list'] = $dataFromModel->with(['translation', 'category', 'resource'])->get()->toArray();
-
-        if($config['list'] == null )
-        {
-            return redirect()->route('app.pages.create', $config);
-        }
-        $config['ignore'] = ['id', 'page_id'];
-//        dd($config);
-        return view('admin.listView', $config);
-	}
-
-	public function indexFrontEnd($slug)
     {
-        $config = [];
-        return view ('frontEnd.pagesSingle', $config);
-    }
+        $config['list'] = VrPages::get()->toArray();
 
-    public function indexFrontEndEn($slug)
-    {
-        $config['item'] = VrPagesTranslations::where('slug', '=', $slug)->get()->toArray();
-//        dd($config);
-        return view ('frontEnd.pagesSingle', $config);
+        $config['serviceTitle'] = trans('app.pages');
+        $config['tableName'] = trans('app.pages_list');
+        $config['route'] = route('app.pages.create');
+
+        $config['create'] = 'app.pages.create';
+        $config['edit'] = 'app.pages.edit';
+        $config['delete'] = 'app.pages.destroy';
+
+        return view('admin.list', $config);
     }
 
 	/**
@@ -53,7 +39,11 @@ class VrPagesController extends Controller {
 	 */
 	public function create()
 	{
+        $config = $this->getFormData();
+        $config['serviceTitle'] = trans('app.pages');
+        $config['route'] = route('app.pages.create');
 
+        return view('admin.form', $config);
 	}
 
 	/**
@@ -64,7 +54,20 @@ class VrPagesController extends Controller {
 	 */
 	public function store()
 	{
+        $data = request()->all();
 
+        $file = request()->file('file');
+
+        $uploadController = new VrResourcesController();
+        $record = $uploadController->upload($file);
+
+        $data['cover_id'] = $record->id;
+        $record = VrPages::create($data);
+
+        $data['record_id'] = $record->id;
+        VrPagesTranslations::create($data);
+
+        return redirect(route('app.pages.edit', $record->id));
     }
 
 	/**
@@ -88,7 +91,23 @@ class VrPagesController extends Controller {
 	 */
 	public function edit($id)
 	{
+        $record = VrPages::find($id)->toArray();
 
+        $record['slug'] = $record['translation']['slug'];
+        $record['title'] = $record['translation']['title'];
+        $record['description_short'] = $record['translation']['description_short'];
+        $record['description_long'] = $record['translation']['description_long'];
+        $record['language_code'] = $record['translation']['language_code'];
+
+        $config = $this->getFormData();
+
+        $config['record'] = $record;
+        $config['titleForm'] = $id;
+        $config['serviceTitle'] = $record['title'];
+        $config['route'] = route('app.pages.edit', $id);
+        $config['back'] = 'app.pages.index';
+
+        return view('admin.form',$config);
 	}
 
 	/**
@@ -100,7 +119,17 @@ class VrPagesController extends Controller {
 	 */
 	public function update($id)
 	{
+        $data = request()->all();
 
+        $record = VrPages::find($id);
+        $data['record_id'] = $id;
+
+        VrPagesTranslations::updateOrCreate([
+            'record_id' => $id,
+            'language_code' => $data['language_code']
+        ], $data);
+
+        return redirect(route('app.pages.edit', $record->id));
 	}
 
 	/**
@@ -112,11 +141,52 @@ class VrPagesController extends Controller {
 	 */
 	public function destroy($id)
 	{
-
+        VrPagesTranslations::destroy(VrPagesTranslations::where('record_id', $id)->pluck('id')->toArray());
+        VrPages::destroy($id);
+        return ["success" => true, "id" => $id];
 	}
 
-    private function listBladeData()
+    public function getFormData()
     {
-
+        $lang = request('language_code');
+        if ($lang == null)
+            $lang = app()->getLocale();
+        $config['fields'][] = [
+            "type" => "drop_down",
+            "key" => "language_code",
+            "options" => getActiveLanguages()
+        ];
+        $config['fields'][] = [
+            "type" => "drop_down",
+            "key" => "category_id",
+            "options" => VrCategoriesTranslations::where('language_code', $lang)
+                ->pluck('name','record_id')
+        ];
+        $config['fields'][] = [
+            "type" => "single_line",
+            "key" => "title"
+        ];
+        $config['fields'][] = [
+            "type" => "textarea",
+            "rows" => 2,
+            "columns" => 40,
+            "key" => "description_short"
+        ];
+        $config['fields'][] = [
+            "type" => "textarea",
+            "rows" => 8,
+            "columns" => 40,
+            "key" => "description_long"
+        ];
+        $config['fields'][] = [
+            "type" => "single_line",
+            "key" => "slug"
+        ];
+        $config['fields'][] = [
+            "type" => "file",
+            "key" => "cover_id",
+            "file" => VrResources::pluck('path', 'id')->toArray()
+        ];
+        return $config;
     }
 }
