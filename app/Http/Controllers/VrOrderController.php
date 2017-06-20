@@ -18,7 +18,7 @@ class VrOrderController extends Controller {
 	 */
 	public function index()
 	{
-        $config['title'] = trans('app.orders_list');
+        $config['serviceTitle'] = trans('app.orders_list');
 	}
 
 
