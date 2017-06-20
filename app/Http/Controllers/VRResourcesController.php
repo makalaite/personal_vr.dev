@@ -7,19 +7,18 @@ use Illuminate\Routing\Controller;
 
 class VrResourcesController extends Controller {
 
-    public function upload(UploadedFile $resource)
+    public function upload(UploadedFile $file)
     {
         $data =
             [
-                "size" => $resource->getsize(),
-                "mime_type" => $resource->getMimetype(),
+                "size" => $file->getsize(),
+                "mime_type" => $file->getMimetype(),
             ];
-        $path = 'upload/' . date("Y/m/d/");
-        $fileName = Carbon::now()->timestamp . '-' . $resource->getClientOriginalName();
-        $resource->move(public_path($path), $fileName);
+        $path = 'upload/' . date ("Y/m/d/");
+        $fileName = Carbon::now()->timestamp . '-' .$file->getClientOriginalName();
+        $file->move(public_path($path), $fileName);
         $data["path"] = $path . $fileName;
-        $record = VrResources::create($data);
-        return $record->id;
+        return VrResources::create($data);
     }
 	/**
 	 * Display a listing of the resource.
