@@ -14,7 +14,7 @@ class VrResourcesController extends Controller {
                 "size" => $file->getsize(),
                 "mime_type" => $file->getMimetype(),
             ];
-        $path = 'upload/' . date ("Y/m/d/");
+        $path = '/upload/' . date ("Y/m/d/");
         $fileName = Carbon::now()->timestamp . '-' .$file->getClientOriginalName();
         $file->move(public_path($path), $fileName);
         $data["path"] = $path . $fileName;
