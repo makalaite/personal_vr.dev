@@ -60,6 +60,14 @@
 
                         @elseif($key == 'rol')
                             <td>{{ $value['role_id'] }}</td>
+
+                        @elseif($key == 'image')
+                            @if(isset($value['path']))
+                                <td><img src="{{ $value['path'] }}" height="25" width="30"></td>
+                            @else
+                                <td>Nofoto</td>
+                            @endif
+
                         @else
                             <td>{{$value}}</td>
                         @endif
