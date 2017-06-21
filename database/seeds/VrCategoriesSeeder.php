@@ -15,7 +15,6 @@ class VrCategoriesSeeder extends Seeder
     {
         $categories = [
             ["id" => "vr_rooms"],
-            ["id" => "menu"],
         ];
 
         $categoriesTrans =

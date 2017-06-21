@@ -19,8 +19,8 @@ class AdminCheck
         if(in_array('super-admin', auth()->user()->roles->pluck('id')->toArray()))
         {
             return $next($request);
-//        } else {
-//            return redirect('login');
+        } else {
+            return redirect('login');
         }
     }
 }

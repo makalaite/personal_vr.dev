@@ -63,7 +63,7 @@
 
                         @elseif($key == 'image')
                             @if(isset($value['path']))
-                                <td><img src="{{ $value['path'] }}" height="25" width="30"></td>
+                                <td><img src="{{ $value['path'] }}" height="55" width="60"></td>
                             @else
                                 <td>Nofoto</td>
                             @endif

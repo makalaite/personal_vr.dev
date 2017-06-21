@@ -107,7 +107,7 @@ class VrMenuController extends Controller
         $config['record'] = $record;
 
         $config['serviceTitle'] = trans('app.menu_list');
-        $config['route'] = route('app.menu.create', $id);
+        $config['route'] = route('app.menu.edit', $id);
 
         return view('admin.form', $config);
     }

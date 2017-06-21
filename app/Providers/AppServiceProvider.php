@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
 
         if (request()->segment(1) !== 'admin' )
         {
-            View::share('_a_', 'Labas');
+            View::share('menu', getFrontEndMenu() );
         }
     }
 
