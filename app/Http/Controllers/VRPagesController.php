@@ -7,16 +7,17 @@ use App\Models\VrPagesTranslations;
 use App\Models\VrResources;
 use Illuminate\Routing\Controller;
 
-class VrPagesController extends Controller {
+class VrPagesController extends Controller
+{
 
-	/**
-	 * Display a listing of the resource.
-	 * GET /vrpages
-	 *
-	 * @return Response
-	 */
+    /**
+     * Display a listing of the resource.
+     * GET /vrpages
+     *
+     * @return Response
+     */
 
-	public function index()
+    public function index()
     {
         $config['list'] = VrPages::get()->toArray();
 
@@ -31,29 +32,29 @@ class VrPagesController extends Controller {
         return view('admin.list', $config);
     }
 
-	/**
-	 * Show the form for creating a new resource.
-	 * GET /vrpages/create
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
+    /**
+     * Show the form for creating a new resource.
+     * GET /vrpages/create
+     *
+     * @return Response
+     */
+    public function create()
+    {
         $config = $this->getFormData();
         $config['serviceTitle'] = trans('app.pages');
         $config['route'] = route('app.pages.create');
 
         return view('admin.form', $config);
-	}
+    }
 
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /vrpages
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
+    /**
+     * Store a newly created resource in storage.
+     * POST /vrpages
+     *
+     * @return Response
+     */
+    public function store()
+    {
         $data = request()->all();
 
         $file = request()->file('file');
@@ -70,27 +71,27 @@ class VrPagesController extends Controller {
         return redirect(route('app.pages.edit', $record->id));
     }
 
-	/**
-	 * Display the specified resource.
-	 * GET /vrpages/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
+    /**
+     * Display the specified resource.
+     * GET /vrpages/{id}
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function show($id)
+    {
 
-	}
+    }
 
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /vrpages/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
+    /**
+     * Show the form for editing the specified resource.
+     * GET /vrpages/{id}/edit
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function edit($id)
+    {
         $record = VrPages::find($id)->toArray();
 
         $record['slug'] = $record['translation']['slug'];
@@ -107,18 +108,18 @@ class VrPagesController extends Controller {
         $config['route'] = route('app.pages.edit', $id);
         $config['back'] = 'app.pages.index';
 
-        return view('admin.form',$config);
-	}
+        return view('admin.form', $config);
+    }
 
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /vrpages/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
+    /**
+     * Update the specified resource in storage.
+     * PUT /vrpages/{id}
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function update($id)
+    {
         $data = request()->all();
 
         $record = VrPages::find($id);
@@ -130,21 +131,26 @@ class VrPagesController extends Controller {
         ], $data);
 
         return redirect(route('app.pages.edit', $record->id));
-	}
+    }
 
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /vrpages/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
+    /**
+     * Remove the specified resource from storage.
+     * DELETE /vrpages/{id}
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
         VrPagesTranslations::destroy(VrPagesTranslations::where('record_id', $id)->pluck('id')->toArray());
+        //        Simple delete
+        //        $cover_id = DB::table('vr_pages')->where('id',$id)->value('cover_id');
+        //        VrResources::where('id', $cover_id )->delete();
+        VRResources::find(VRPages::find($id)->cover_id)->delete();
         VrPages::destroy($id);
+
         return ["success" => true, "id" => $id];
-	}
+    }
 
     public function getFormData()
     {
@@ -160,7 +166,7 @@ class VrPagesController extends Controller {
             "type" => "drop_down",
             "key" => "category_id",
             "options" => VrCategoriesTranslations::where('language_code', $lang)
-                ->pluck('name','record_id')
+                ->pluck('name', 'record_id')
         ];
         $config['fields'][] = [
             "type" => "single_line",
