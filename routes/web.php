@@ -1,7 +1,11 @@
 <?php
 
+Route::group(['prefix' => '{lang?}'], function () {
+    Route::get('/', ['as' => 'app.frontEnd.index', 'uses' => 'FrontEndController@index']);
 
-Route::get('/', ['as' => 'app.frontEnd.index', 'uses' => 'FrontEndController@index']);
+});
+
+Route::get('{lang}/pages/{slug}', ['as' => 'app.frontEnd.show', 'uses' => 'FrontEndController@showPage']);
 
 Auth::routes();
 
@@ -11,10 +15,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 //    return view('welcome');
 //});
 
-
-//Route::group(['prefix' => '{lang?}'], function () {
-//    Route::get('/frontend', ['as' => 'app.frontEnd.index', 'uses' => 'FrontEndController@index']);
-//});
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin-permissions']], function () {
 
