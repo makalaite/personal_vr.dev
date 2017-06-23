@@ -3,6 +3,7 @@
 use App\Models\VrOrder;
 use App\Models\VrPages;
 use App\Models\VrReservations;
+use App\Models\VrUsers;
 use Carbon\Carbon;
 use DateTimeZone;
 use Illuminate\Routing\Controller;
@@ -18,7 +19,15 @@ class VrOrderController extends Controller {
 	 */
 	public function index()
 	{
+	    $config['list'] = VrOrder::get()->toArray();
         $config['serviceTitle'] = trans('app.orders_list');
+        $config['route'] = route('app.orders.create');
+
+        $config['create'] = 'app.orders.create';
+        $config['edit'] = 'app.orders.edit';
+        $config['delete'] = 'app.orders.destroy';
+
+        return view('admin.list', $config);
 	}
 
 
@@ -30,7 +39,12 @@ class VrOrderController extends Controller {
 	 */
 	public function create()
 	{
+        $config = $this->getFormData();
 
+        $config['serviceTitle'] = trans('app.orders_list');
+        $config['route'] = route('app.orders.create');
+
+        return view('admin.form', $config);
 	}
 
 	/**
@@ -41,7 +55,10 @@ class VrOrderController extends Controller {
 	 */
 	public function store()
 	{
+        $data = request()->all();
+        VrOrder::create($data);
 
+        return redirect()->route('app.orders.index');
     }
 
 	/**
@@ -92,8 +109,23 @@ class VrOrderController extends Controller {
 		//
 	}
 
-    private function listBladeData()
+    private function getFormData()
     {
+        $config['fields'][] = [
+            "type" => "drop_down",
+            "key" => "users",
+            "options" => VrUsers::pluck('name', 'id')->toArray()
+        ];
 
+        $config['fields'][] = [
+            "type" => "drop_down",
+            "key" => "status",
+            "options" => [
+                "pending" => trans('app.pending'),
+                "canceled" => trans('app.canceled'),
+                "aproved" => trans('app.aproved'),
+            ]
+        ];
+        return $config;
     }
 }

@@ -43,7 +43,7 @@
 
                             <ul class="dropdown-menu">
                                 @foreach($rooms as $room)
-                                    <li><a href=" {{ app()->getLocale() . '/pages/' . $room['translation']['slug']}}">{{$room['translation']['title']}}</a></li>
+                                    <li><a href=" /{{ app()->getLocale() . '/pages/' . $room['translation']['slug']}}">{{$room['translation']['title']}}</a></li>
                                 @endforeach
                             </ul>
                         </li>

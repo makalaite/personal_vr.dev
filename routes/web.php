@@ -1,11 +1,11 @@
 <?php
 
-Route::group(['prefix' => '{lang?}'], function () {
-    Route::get('/', ['as' => 'app.frontEnd.index', 'uses' => 'FrontEndController@index']);
 
-});
+//Route::group(['prefix' => '/'], function (){
+//    Route::get('/', ['as' => 'app.user.index', 'uses' => 'FrontEndController@index']);
+//      Route::get('/{lang}/pages/{slug}', ['as' => 'app.user.show', 'uses' => 'FrontEndController@pageShow']);
+//         Route::get('/{lang}/pages/{slug}', ['as' => 'app.user.show', 'uses' => 'FrontEndController@pageShow']);
 
-Route::get('{lang}/pages/{slug}', ['as' => 'app.frontEnd.show', 'uses' => 'FrontEndController@showPage']);
 
 Auth::routes();
 
@@ -21,7 +21,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin-permissions']
     Route::get('/', function () {
         return view('admin.core');
     });
-    
+
     Route::group(['prefix' => 'menu'], function () {
 
         Route::get('/', ['as' => 'app.menu.index', 'uses' => 'VrMenuController@index']);
@@ -103,3 +103,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin-permissions']
 });
 
 
+Route::get('{lang}/pages/{slug}', ['as' => 'app.frontEnd.show', 'uses' => 'FrontEndController@showPage']);
+
+
+Route::group(['prefix' => '{lang?}'], function () {
+    Route::get('/', ['as' => 'app.frontEnd.index', 'uses' => 'FrontEndController@index']);
+
+});
