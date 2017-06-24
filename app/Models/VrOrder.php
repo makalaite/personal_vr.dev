@@ -17,4 +17,9 @@ class VrOrder extends CoreModel
      * @var array
      */
     protected $fillable = ['id', 'status', 'user_id'];
+
+//    public function order()
+//    {
+//        return $this->hasOne(VrReservations::class, 'id', 'cover_id');
+//    }
 }

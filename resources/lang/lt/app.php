@@ -40,4 +40,8 @@ return [
     'confirm_password' => 'Pakartokit slaptažodį',
     'role_id' => 'Pasirinkite rolę',
 
+    'status' => 'Užsakymo statusas',
+    'aproved' => 'Priimtas',
+    'canceled' => 'Atšauktas',
+    'pending' => 'Laukiama'
 ];
