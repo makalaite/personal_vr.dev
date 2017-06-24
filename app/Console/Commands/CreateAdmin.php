@@ -54,6 +54,6 @@ class CreateAdmin extends Command
 
         ]);
 
-        $record->role()->sync('super-admin');
+        $record->roles()->sync('super-admin');
     }
 }

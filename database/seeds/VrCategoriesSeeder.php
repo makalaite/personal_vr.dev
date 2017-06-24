@@ -1,8 +1,8 @@
 <?php
 
+use Illuminate\Database\Seeder;
 use App\Models\VrCategories;
 use App\Models\VrCategoriesTranslations;
-use Illuminate\Database\Seeder;
 
 class VrCategoriesSeeder extends Seeder
 {

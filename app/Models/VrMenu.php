@@ -17,7 +17,7 @@ class VrMenu extends CoreModel
      */
     protected $fillable = ['id', 'new_window', 'sequence', 'vr_parent_id'];
 
-    protected $with = ['translation', 'children'];
+    protected $with = ['translation'];
 
     public function translation()
     {
@@ -31,7 +31,7 @@ class VrMenu extends CoreModel
 
     public function children()
     {
-        return $this->hasMany(VrMenu::class, 'vr_parent_id', 'id');
+        return $this->hasMany(VrMenu::class, 'vr_parent_id');
     }
 
 

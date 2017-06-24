@@ -1,9 +1,7 @@
 <?php
 
-use App\Models\VrCategories;
-
-use App\Models\VrCategoriesTranslations;
 use Illuminate\Database\Seeder;
+
 
 class DatabaseSeeder extends Seeder
 {
