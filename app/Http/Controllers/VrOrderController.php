@@ -82,7 +82,15 @@ class VrOrderController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+        $record = VrOrder::find($id)->toArray();
+
+        $config = $this->getFormData();
+
+        $config['record'] = $record;
+        $config['titleForm'] = $id;
+        $config['route'] = route('app.orders.edit', $id);
+
+        return view('admin.create',$config);
 	}
 
 	/**
@@ -94,7 +102,12 @@ class VrOrderController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
+        $data = request()->all();
+
+        $record = VrOrder::find($id);
+        $record->update($data);
+
+        return redirect(route('app.orders.index'));
 	}
 
 	/**
@@ -106,7 +119,8 @@ class VrOrderController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+        VrOrder::destroy($id);
+        return ["success" => true, "id" => $id];
 	}
 
     private function getFormData()

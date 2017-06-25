@@ -4,13 +4,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
 
-    <title> User Menu </title>
+    {{--<title> User Menu </title>--}}
+    <title>@yield('title')</title>
 </head>
 <body>
 
 @include('user.menu')
 <div id="main-menu">
-
+    @yield('content')
 </div>
 
 

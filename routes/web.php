@@ -103,10 +103,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin-permissions']
 });
 
 
-Route::get('{lang}/pages/{slug}', ['as' => 'app.frontEnd.show', 'uses' => 'FrontEndController@showPage']);
-
-
-Route::group(['prefix' => '{lang?}'], function () {
+Route::group(['prefix' => '/'], function () {
     Route::get('/', ['as' => 'app.frontEnd.index', 'uses' => 'FrontEndController@index']);
-
+    Route::get('{lang}/pages/{slug}', ['as' => 'app.frontEnd.show', 'uses' => 'FrontEndController@showPage']);
 });
