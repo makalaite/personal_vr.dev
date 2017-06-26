@@ -32,9 +32,14 @@ class CoreModel extends Model
             }
         });
     }
-    public function getTableName()
+    public function getTableNames()
     {
         $tableName = substr($this->table,3);
         return $tableName;
+    }
+
+    public static function getTableName()
+    {
+        return with(new static)->getTable();
     }
 }
