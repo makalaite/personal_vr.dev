@@ -97,17 +97,29 @@
 
         });
 
-        var $time = $('#time');
+        var $time = $('#time'); //apsirasai kintamuosius, kad galetum naudoti paprasciau
         var $experience = $('#experience');
 
-        if ($time.length > 0 && $experience.length > 0) {
+        if ($time.length > 0 && $experience.length > 0) { //patikrini pagal ilgi ar isvis egzistuoja time ir experience nes su isset visada rodyu,kad yra
 
-            $time.bind('change', getAvailableHours);
-
+            $time.bind('change', getAvailableHours); //Attach a handler to an event for the elements
             $experience.bind('change', getAvailableHours);
 
             function getAvailableHours() {
-                console.log($time.val(), $experience.val())
+                console.log($time.val(), $experience.val()) //paduotos abi reiksmes vienoje funk, kad galetum kartu naudoti
+
+                $.ajax({
+                    url: '{{ route('app.order.reservation') }}', //php funkc bet ajaxe, todel reikia stringo, kad suprastu
+                    type: 'GET',
+                    data: {
+                        time: $time.val(), //sukurti pavadinimai prilyginami reiksmem
+                        experience: $experience.val()
+                    },
+                    success: function (response) {
+
+                        console.log(response) //grazina uzbookinta data su valandomis
+                    }
+                });
 
             }
 
