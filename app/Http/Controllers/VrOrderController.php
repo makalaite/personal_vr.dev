@@ -113,6 +113,21 @@ class VrOrderController extends Controller
     }
 
     /**
+     * function for making a reservation
+     */
+    public function reservation()
+    {
+        $data = request()->all();
+
+        $start = Carbon::parse($data['time'])->startOfDay();
+        $end = Carbon::parse($data['time'])->endOfDay();
+
+        return VrReservations::where('time', '>=', $start )
+            ->where('time', '<=', $end)->pluck('time')->toArray();
+
+    }
+
+    /**
      * Remove the specified resource from storage.
      * DELETE /vrorder/{id}
      *
@@ -129,7 +144,7 @@ class VrOrderController extends Controller
     {
         $dates = [];
 
-        for($date = Carbon::now(); $date->lte(Carbon::createFromDate()->addDay(14)); $date->addDay()) {
+        for ($date = Carbon::now(); $date->lte(Carbon::createFromDate()->addDay(14)); $date->addDay()) {
             $dates[$date->format('Y-m-d')] = $date->format('Y-m-d');
         }
 
