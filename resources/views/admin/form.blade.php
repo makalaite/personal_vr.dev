@@ -6,7 +6,7 @@
 
     @foreach($fields as $field) <br/>
 
-            {{ Form::label($field['key'], trans('app.' . $field['key'])) }} <br/>
+    {{ Form::label($field['key'], trans('app.' . $field['key'])) }} <br/>
 
 
     @if($field['type'] == 'single_line')
@@ -95,5 +95,20 @@
             window.location.href = '?language_code=' + $('#language_code').val(); // nurodai vieta kur jau esi, pridedi nekintama nuoroda plius id su reiksme ant kurios atsistosi
 
         });
+
+        var $time = $('#time');
+        var $experience = $('#experience');
+
+        if ($time.length > 0 && $experience.length > 0) {
+
+            $time.bind('change', function () {
+                console.log($time.val())
+            });
+
+            $experience.bind('change', function () {
+                console.log($experience.val())
+            });
+
+        }
     </script>
 @endsection
