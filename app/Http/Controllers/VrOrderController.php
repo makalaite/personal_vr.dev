@@ -132,7 +132,7 @@ class VrOrderController extends Controller
         for($date = Carbon::now(); $date->lte(Carbon::createFromDate()->addDay(14)); $date->addDay()) {
             $dates[$date->format('Y-m-d')] = $date->format('Y-m-d');
         }
-        dd($dates);
+
         return $dates;
     }
 
