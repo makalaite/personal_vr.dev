@@ -31,7 +31,8 @@
 
         @if(isset($record[$field['key']]))
 
-            @if($field['key'] == 'language_code' || $field['key'] == 'category_id' )
+            @if(in_array($field['key'], ['language_code', 'category_id', 'time', 'experience']) )
+
                 {{Form::select($field['key'],$field['options'], $record[$field['key']])}}
             @else
                 {{Form::select($field['key'],$field['options'], $record[$field['key']], ['placeholder' => '']) }}
@@ -39,7 +40,7 @@
 
 
         @else
-            @if($field['key'] == 'language_code' || $field['key'] == 'category_id')
+            @if(in_array($field['key'], ['language_code', 'category_id', 'time', 'experience']) )
                 {{Form::select($field['key'],$field['options'])}}
             @else
                 {{Form::select($field['key'],$field['options'], null, ['placeholder' => ''] ) }}
@@ -101,13 +102,14 @@
 
         if ($time.length > 0 && $experience.length > 0) {
 
-            $time.bind('change', function () {
-                console.log($time.val())
-            });
+            $time.bind('change', getAvailableHours);
 
-            $experience.bind('change', function () {
-                console.log($experience.val())
-            });
+            $experience.bind('change', getAvailableHours);
+
+            function getAvailableHours() {
+                console.log($time.val(), $experience.val())
+
+            }
 
         }
     </script>
