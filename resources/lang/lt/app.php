@@ -43,5 +43,8 @@ return [
     'status' => 'Užsakymo statusas',
     'aproved' => 'Priimtas',
     'canceled' => 'Atšauktas',
-    'pending' => 'Laukiama'
+    'pending' => 'Laukiama',
+
+    'time' => 'Laikas',
+    'experience' => 'Patirčių kambarys',
 ];
