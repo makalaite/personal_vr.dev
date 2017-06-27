@@ -142,10 +142,12 @@ class VrPagesController extends Controller
      */
     public function destroy($id)
     {
-        VrPagesTranslations::destroy(VrPagesTranslations::where('record_id', $id)->pluck('id')->toArray());
         //        Simple delete
         //        $cover_id = DB::table('vr_pages')->where('id',$id)->value('cover_id');
         //        VrResources::where('id', $cover_id )->delete();
+
+        
+        VrPagesTranslations::destroy(VrPagesTranslations::where('record_id', $id)->pluck('id')->toArray());
         VRResources::find(VRPages::find($id)->cover_id)->delete();
         VrPages::destroy($id);
 
